@@ -8,5 +8,10 @@ namespace WPF_Game_Gorillas
 {
     class Gorillas
     {
+        private int windowWidth = 0, windowHeight = 0;
+        public Gorillas(int windowWidth, int windowHeight)
+        {
+
+        }
     }
 }

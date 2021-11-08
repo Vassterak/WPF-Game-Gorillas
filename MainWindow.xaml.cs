@@ -23,6 +23,7 @@ namespace WPF_Game_Gorillas
         public MainWindow()
         {
             InitializeComponent();
+
         }
     }
 }

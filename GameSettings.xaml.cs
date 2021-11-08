@@ -25,16 +25,39 @@ namespace WPF_Game_Gorillas
             InitializeComponent();
         }
 
-        private static readonly Regex _lettNum = new Regex("^[A-Za-z0-9_-]*$");
+        private static readonly Regex _lettNum = new Regex("^[A-Za-z0-9ěščřžýáíé]*$");
 
         private void textBox_player1_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = _lettNum.IsMatch(e.Text);
+            if (!_lettNum.IsMatch(e.Text))
+                e.Handled = true;
+
+            CheckNameLenght(e, textBox_player1);
         }
 
         private void textBox_player2_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = _lettNum.IsMatch(e.Text);
+            if (!_lettNum.IsMatch(e.Text))
+                e.Handled = true;
+
+            CheckNameLenght(e, textBox_player2);
+        }
+
+        private void CheckNameLenght(TextCompositionEventArgs e, TextBox textBox)
+        {
+            if (textBox.Text.Length > 8)
+            {
+                MessageBox.Show("Jméno je moc dlouhé!"); 
+                e.Handled = true;
+            }
+        }
+
+        private void button_newGame_Click(object sender, RoutedEventArgs e)
+        {
+
+            MainWindow mainGame = new MainWindow();
+            mainGame.Show();
+            this.Close();
         }
     }
 }
