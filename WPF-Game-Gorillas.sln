@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF-Game-Gorillas", "WPF-Game-Gorillas.csproj", "{9807069C-A832-40AF-9F93-6F3151C37290}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9807069C-A832-40AF-9F93-6F3151C37290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9807069C-A832-40AF-9F93-6F3151C37290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9807069C-A832-40AF-9F93-6F3151C37290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9807069C-A832-40AF-9F93-6F3151C37290}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58A4F9BD-C0C2-491E-BC1D-038D775348DA}
+	EndGlobalSection
+EndGlobal
