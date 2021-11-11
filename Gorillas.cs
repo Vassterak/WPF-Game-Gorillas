@@ -48,7 +48,7 @@ namespace WPF_Game_Gorillas
 
         private void RenderSkyscrapers() 
         {
-            //int[] gorillasLocation = GorillasLocation(); //generate random column position for gorillas (players)
+            int[] gorillasLocation = GorillasColumnLocation(); //generate random column position for gorillas (players)
 
             int skycraperWidth = (int)(gameCanvas.ActualWidth / CanvasColumns);
 
@@ -61,9 +61,6 @@ namespace WPF_Game_Gorillas
             //    rectangle.SetValue(Grid.ColumnProperty, x);
             //    Grid.SetRowSpan(rectangle,skyscraperHeight + 1);
             //    gameCanvas.Children.Add(rectangle);
-
-            //    if (gorillasLocation[0] == x || gorillasLocation[1] == x) //when position is met add player.
-            //        GorillaSpawn(x, (int)CanvasWidth - skyscraperHeight - 3);
             //}
 
             for (int i = 0; i < CanvasColumns; i++)
@@ -74,27 +71,30 @@ namespace WPF_Game_Gorillas
                 Canvas.SetLeft(rectangle, skycraperWidth * i);
                 Canvas.SetTop(rectangle, gameCanvas.ActualHeight - rectangle.Height);
                 gameCanvas.Children.Add(rectangle);
+
+                if (gorillasLocation[0] == i || gorillasLocation[1] == i) //when position is met add player.
+                    GorillaSpawn(skycraperWidth * i, (int)(gameCanvas.ActualHeight - rectangle.Height));
             }
 
         }
 
-        //private int[] GorillasLocation()
-        //{
-        //    int[] player = new int[2];
-        //    player[0] = rnd.Next(0, 3);
-        //    player[1] = rnd.Next((int)CanvasHeight - 3, (int)CanvasHeight);
+        private int[] GorillasColumnLocation()
+        {
+            int[] player = new int[2];
+            player[0] = rnd.Next(0, 3);
+            player[1] = rnd.Next((int)CanvasColumns - 3, (int)CanvasColumns);
 
-        //    return player;
-        //}
+            return player;
+        }
 
-        private void GorillaSpawn(int gridColumn, int rowHeight)
+        private void GorillaSpawn(int leftPosition, int topPosition)
         {
             Rectangle gorillaSprite = new Rectangle();
             gorillaSprite.Fill = new ImageBrush(new BitmapImage(new Uri("Resources/gorilla.png", UriKind.Relative))); //Microsoft's horrible image implementation
-
-            gorillaSprite.SetValue(Grid.RowProperty, rowHeight);
-            gorillaSprite.SetValue(Grid.ColumnProperty, gridColumn);
-            Grid.SetRowSpan(gorillaSprite, 3);
+            gorillaSprite.Width = 80;
+            gorillaSprite.Height = 80;
+            Canvas.SetLeft(gorillaSprite, leftPosition);
+            Canvas.SetTop(gorillaSprite, topPosition - gorillaSprite.Height);
             gameCanvas.Children.Add(gorillaSprite);
 
         }
