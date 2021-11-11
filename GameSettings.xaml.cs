@@ -25,6 +25,7 @@ namespace WPF_Game_Gorillas
             InitializeComponent();
         }
 
+        private static readonly Regex _numOnly = new Regex("^[0-9]*$");
         private static readonly Regex _lettNum = new Regex("^[A-Za-z0-9ěščřžýáíé]*$");
 
         private void textBox_player1_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -56,6 +57,12 @@ namespace WPF_Game_Gorillas
         {
             MainWindow mainGame = new MainWindow();
             mainGame.ShowDialog(); //Prevents to creating new window until the old is closed
+        }
+
+        private void textBox_playerSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!_numOnly.IsMatch(e.Text))
+                e.Handled = true;
         }
     }
 }

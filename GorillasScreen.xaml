@@ -21,8 +21,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="player1Name" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Content="Player 1 Name" Foreground="White"/>
-            <Label x:Name="player2Name" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" Grid.ColumnSpan="2" Content="Player 2 Name" Foreground="White"/>
+            <Label x:Name="player1Name" x:FieldModifier="public"  Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Content="Player 1 Name" Foreground="White"/>
+            <Label x:Name="player2Name" x:FieldModifier="public" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" Grid.ColumnSpan="2" Content="Player 2 Name" Foreground="White"/>
 
             <Label Content="Úhel: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Foreground="White" />
             <Label Content=": Úhel" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" Foreground="White" />
@@ -36,7 +36,7 @@
             <TextBox x:Name="player2Angle" Grid.Row="1" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Angle_PreviewTextInput"/>
             <TextBox x:Name="player2Power" Grid.Row="2" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Power_PreviewTextInput"/>
 
-            <Button x:Name="nextRoundButton" Content="Hraj!" Grid.Column="2" Grid.Row="1"/>
+            <Button x:Name="nextRoundButton" Content="Hraj!" Grid.Column="2" Grid.Row="1" Click="nextRoundButton_Click"/>
 
         </Grid>
     </Canvas>

@@ -32,16 +32,13 @@ namespace WPF_Game_Gorillas
             }
         }
 
-        public Gorillas(double windowWidth, double windowHeight, Canvas gameCanvas, string[] playersNames, int playerSize)
+        public Gorillas(double windowWidth, double windowHeight, Canvas gameCanvas, int playerSize)
         {
             GorillaSize = playerSize;
             this.gameCanvas = gameCanvas;
             CanvasColumns = rnd.Next(9, 11 + 1);
 
             RenderSkyscrapers(); //w GorillaSpawn
-
-            //PlayersNames(playersNames[0], 0, 0);
-            //PlayersNames(playersNames[1], 0, (int)CanvasHeight -1);
         }
 
         private void RenderSkyscrapers() 

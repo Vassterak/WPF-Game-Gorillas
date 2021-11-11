@@ -22,6 +22,7 @@ namespace WPF_Game_Gorillas
     public partial class MainWindow : Window
     {
         private static readonly Regex _numOnly = new Regex("^[0-9]*$");
+        Gorillas gorillasGame;
 
         private int[] player1 = new int[2];
         private int[] player2 = new int[2];
@@ -34,11 +35,10 @@ namespace WPF_Game_Gorillas
 
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            string[] names = new string[2];
-            names[0] = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text;
-            names[1] = ((GameSettings)Application.Current.MainWindow).textBox_player2.Text;
+            gorillasGame = new Gorillas(this.Width, this.Height, gameCanvas, int.Parse(((GameSettings)Application.Current.MainWindow).textBox_playerSize.Text));
 
-            Gorillas gorillasGame = new Gorillas(this.Width, this.Height, gameCanvas, names, int.Parse(((GameSettings)Application.Current.MainWindow).textBox_playerSize.Text));
+            player1Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text;
+            player2Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player2.Text;
         }
 
         private void ESCapeKey(object sender, KeyEventArgs e)
@@ -100,6 +100,11 @@ namespace WPF_Game_Gorillas
                 MessageBox.Show("Zadal jste neplatné hodnoty");
                 return 0;
             }
+        }
+
+        private void nextRoundButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
