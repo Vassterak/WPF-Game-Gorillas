@@ -27,7 +27,7 @@ namespace WPF_Game_Gorillas
         private void PrepareGameField(double windowWidth, double windowHeight) //Create a grid layout for the content
         {
             GridRows = windowHeight / 20;
-            GridColumns = rnd.Next(8, 11 + 1);
+            GridColumns = rnd.Next(9, 11 + 1);
 
             for (int i = 0; i < GridRows; i++)
             {

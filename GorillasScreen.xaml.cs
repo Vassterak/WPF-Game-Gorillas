@@ -23,11 +23,20 @@ namespace WPF_Game_Gorillas
         public MainWindow()
         {
             InitializeComponent();
+            this.PreviewKeyDown += new KeyEventHandler(ESCapeKey);
         }
 
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
             Gorillas gorillasGame = new Gorillas(this.Width, this.Height, gameGrid);
+        }
+
+        private void ESCapeKey(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

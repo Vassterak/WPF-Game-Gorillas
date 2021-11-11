@@ -54,10 +54,8 @@ namespace WPF_Game_Gorillas
 
         private void button_newGame_Click(object sender, RoutedEventArgs e)
         {
-
             MainWindow mainGame = new MainWindow();
-            mainGame.Show();
-            this.Close();
+            mainGame.ShowDialog(); //Prevents to creating new window until the old is closed
         }
     }
 }
