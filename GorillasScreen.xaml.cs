@@ -32,7 +32,7 @@ namespace WPF_Game_Gorillas
             names[0] = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text;
             names[1] = ((GameSettings)Application.Current.MainWindow).textBox_player2.Text;
 
-            Gorillas gorillasGame = new Gorillas(this.Width, this.Height, gameCanvas, names);
+            Gorillas gorillasGame = new Gorillas(this.Width, this.Height, gameCanvas, names, int.Parse(((GameSettings)Application.Current.MainWindow).textBox_playerSize.Text));
         }
 
         private void ESCapeKey(object sender, KeyEventArgs e)

@@ -29,8 +29,10 @@
 
         <Label Content="Hráč číslo 1 jméno: " Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Label Content="Hráč číslo 2 jméno: " Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Content="Velikost hráčů na hrací ploše: " Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBox x:Name="textBox_player1" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player1_PreviewTextInput"/>
         <TextBox x:Name="textBox_player2" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player2_PreviewTextInput" />
+        <TextBox x:Name="textBox_playerSize" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player2_PreviewTextInput" Text="80"/>
 
         <Button x:Name="button_newGame" Content="Start !" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30" Click="button_newGame_Click"/>
     </Grid>

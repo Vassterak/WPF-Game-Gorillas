@@ -15,10 +15,26 @@ namespace WPF_Game_Gorillas
     {
         private Canvas gameCanvas = new Canvas();
         private Random rnd = new Random();
-        public int CanvasColumns { get; set; }
-
-        public Gorillas(double windowWidth, double windowHeight, Canvas gameCanvas, string[] playersNames)
+        private int CanvasColumns { get; set; }
+        private int gorillaSize;
+        private int GorillaSize
         {
+            get
+            {
+                return gorillaSize;
+            }
+            set
+            {
+                if (value > 100 || value < 20)
+                    throw new ArgumentException("špatná hodnota!"); //Wrong value
+                else
+                    gorillaSize = value;
+            }
+        }
+
+        public Gorillas(double windowWidth, double windowHeight, Canvas gameCanvas, string[] playersNames, int playerSize)
+        {
+            GorillaSize = playerSize;
             this.gameCanvas = gameCanvas;
             CanvasColumns = rnd.Next(9, 11 + 1);
 
@@ -28,40 +44,11 @@ namespace WPF_Game_Gorillas
             //PlayersNames(playersNames[1], 0, (int)CanvasHeight -1);
         }
 
-        //private void PrepareGameField(double windowWidth, double windowHeight) //Create a grid layout for the content USELESS NOW !
-        //{
-        //    CanvasWidth = windowHeight / 20;
-        //    CanvasHeight = rnd.Next(9, 11 + 1);
-
-        //    for (int i = 0; i < CanvasWidth; i++)
-        //    {
-        //        RowDefinition row = new RowDefinition();
-        //        gameCanvas.RowDefinitions.Add(row);
-        //    }
-
-        //    for (int i = 0; i < CanvasHeight; i++)
-        //    {
-        //        ColumnDefinition column = new ColumnDefinition();
-        //        gameCanvas.ColumnDefinitions.Add(column);
-        //    }
-        //}
-
         private void RenderSkyscrapers() 
         {
             int[] gorillasLocation = GorillasColumnLocation(); //generate random column position for gorillas (players)
 
             int skycraperWidth = (int)(gameCanvas.ActualWidth / CanvasColumns);
-
-            //for (int x = 0; x < CanvasHeight; x++)
-            //{
-            //    int skyscraperHeight = rnd.Next(2, (int)CanvasWidth - 5);
-
-            //    Rectangle rectangle = new Rectangle { Fill = Brushes.Gray, StrokeThickness = 1, Stroke = Brushes.Black}; //one is gray other is brown and so on...
-            //    rectangle.Width
-            //    rectangle.SetValue(Grid.ColumnProperty, x);
-            //    Grid.SetRowSpan(rectangle,skyscraperHeight + 1);
-            //    gameCanvas.Children.Add(rectangle);
-            //}
 
             for (int i = 0; i < CanvasColumns; i++)
             {
@@ -91,8 +78,8 @@ namespace WPF_Game_Gorillas
         {
             Rectangle gorillaSprite = new Rectangle();
             gorillaSprite.Fill = new ImageBrush(new BitmapImage(new Uri("Resources/gorilla.png", UriKind.Relative))); //Microsoft's horrible image implementation
-            gorillaSprite.Width = 80;
-            gorillaSprite.Height = 80;
+            gorillaSprite.Width = GorillaSize;
+            gorillaSprite.Height = GorillaSize;
             Canvas.SetLeft(gorillaSprite, leftPosition);
             Canvas.SetTop(gorillaSprite, topPosition - gorillaSprite.Height);
             gameCanvas.Children.Add(gorillaSprite);
