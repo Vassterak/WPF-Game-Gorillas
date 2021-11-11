@@ -51,7 +51,7 @@ namespace WPF_Game_Gorillas
                 Rectangle rectangle = new Rectangle { Fill = Brushes.Gray, StrokeThickness = 1, Stroke = Brushes.Black}; //one is gray other is brown and so on...
                 rectangle.SetValue(Grid.RowProperty, (int)GridRows - skyscraperHeight);
                 rectangle.SetValue(Grid.ColumnProperty, x);
-                Grid.SetRowSpan(rectangle,skyscraperHeight);
+                Grid.SetRowSpan(rectangle,skyscraperHeight + 1);
                 gameGrid.Children.Add(rectangle);
             }
         }
