@@ -23,7 +23,11 @@ namespace WPF_Game_Gorillas
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        private void Window_SourceInitialized(object sender, EventArgs e)
+        {
+            Gorillas gorillasGame = new Gorillas(this.Width, this.Height, gameGrid);
         }
     }
 }
