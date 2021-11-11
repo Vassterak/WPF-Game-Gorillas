@@ -60,7 +60,7 @@ namespace WPF_Game_Gorillas
                 gameCanvas.Children.Add(rectangle);
 
                 if (gorillasLocation[0] == i || gorillasLocation[1] == i) //when position is met add player.
-                    GorillaSpawn(skycraperWidth * i, (int)(gameCanvas.ActualHeight - rectangle.Height));
+                    GorillaSpawn(skycraperWidth * i, (int)(gameCanvas.ActualHeight - rectangle.Height), i);
             }
 
         }
@@ -74,15 +74,29 @@ namespace WPF_Game_Gorillas
             return player;
         }
 
-        private void GorillaSpawn(int leftPosition, int topPosition)
+        private void GorillaSpawn(int leftPosition, int topPosition, int index)
         {
-            Rectangle gorillaSprite = new Rectangle();
-            gorillaSprite.Fill = new ImageBrush(new BitmapImage(new Uri("Resources/gorilla.png", UriKind.Relative))); //Microsoft's horrible image implementation
-            gorillaSprite.Width = GorillaSize;
-            gorillaSprite.Height = GorillaSize;
-            Canvas.SetLeft(gorillaSprite, leftPosition);
-            Canvas.SetTop(gorillaSprite, topPosition - gorillaSprite.Height);
-            gameCanvas.Children.Add(gorillaSprite);
+            if (index < 3) //of course I'm writing the most efficient code... As I always did...
+            {
+                Rectangle gorillaSprite1 = new Rectangle();
+                gorillaSprite1.Fill = new ImageBrush(new BitmapImage(new Uri("Resources/gorilla.png", UriKind.Relative))); //Microsoft's horrible image implementation
+                gorillaSprite1.Width = GorillaSize;
+                gorillaSprite1.Height = GorillaSize;
+                Canvas.SetLeft(gorillaSprite1, leftPosition);
+                Canvas.SetTop(gorillaSprite1, topPosition - gorillaSprite1.Height);
+                gameCanvas.Children.Add(gorillaSprite1);
+            }
+
+            else
+            {
+                Rectangle gorillaSprite2 = new Rectangle();
+                gorillaSprite2.Fill = new ImageBrush(new BitmapImage(new Uri("Resources/gorilla.png", UriKind.Relative))); //Microsoft's horrible image implementation
+                gorillaSprite2.Width = GorillaSize;
+                gorillaSprite2.Height = GorillaSize;
+                Canvas.SetLeft(gorillaSprite2, leftPosition);
+                Canvas.SetTop(gorillaSprite2, topPosition - gorillaSprite2.Height);
+                gameCanvas.Children.Add(gorillaSprite2);
+            }
 
         }
 
