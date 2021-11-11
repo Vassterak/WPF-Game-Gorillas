@@ -18,11 +18,14 @@ namespace WPF_Game_Gorillas
         private double GridRows { get; set; }
         private double GridColumns { get; set; }
 
-        public Gorillas(double windowWidth, double windowHeight, Grid gameGrid)
+        public Gorillas(double windowWidth, double windowHeight, Grid gameGrid, string[] playersNames)
         {
             this.gameGrid = gameGrid;
             PrepareGameField(windowWidth, windowHeight);
             RenderSkyscrapers(); //w GorillaSpawn
+
+            PlayersNames(playersNames[0], 0, 0);
+            PlayersNames(playersNames[1], 0, (int)GridColumns -1);
         }
 
         private void PrepareGameField(double windowWidth, double windowHeight) //Create a grid layout for the content
@@ -81,6 +84,17 @@ namespace WPF_Game_Gorillas
             Grid.SetRowSpan(gorillaSprite, 3);
             gameGrid.Children.Add(gorillaSprite);
 
+        }
+
+        private void PlayersNames(string name, int row, int column)
+        {
+            Label playersName = new Label { Foreground = Brushes.White };
+            playersName.Content = name;
+            playersName.SetValue(Grid.RowProperty, row);
+            playersName.SetValue(Grid.ColumnProperty, column);
+            Grid.SetColumnSpan(playersName, 2);
+
+            gameGrid.Children.Add(playersName);
         }
     }
 }
