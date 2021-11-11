@@ -21,7 +21,7 @@ namespace WPF_Game_Gorillas
         {
             this.gameGrid = gameGrid;
             PrepareGameField(windowWidth, windowHeight);
-            RenderCheckeredBackground();
+            RenderSkyscrapers();
         }
 
         private void PrepareGameField(double windowWidth, double windowHeight) //Create a grid layout for the content
@@ -42,32 +42,18 @@ namespace WPF_Game_Gorillas
             }
         }
 
-        private void RenderCheckeredBackground()
+        private void RenderSkyscrapers()
         {
-            bool oddRectangle = true;
-
-            for (int y = 0; y < GridRows; y++)
+            for (int x = 0; x < GridColumns; x++)
             {
-                for (int x = 0; x < GridColumns; x++)
-                {
+                int skyscraperHeight = rnd.Next(2, (int)GridRows - 5);
 
-                    Rectangle rectangle = new Rectangle { Fill = oddRectangle ? Brushes.LightGray : Brushes.SaddleBrown }; //one is gray other is brown and so on...
-                    rectangle.SetValue(Grid.RowProperty, y);
-                    rectangle.SetValue(Grid.ColumnProperty, x);
-                    gameGrid.Children.Add(rectangle);
-
-                    oddRectangle = OddChecker(oddRectangle, x); //Creating the checkboard pattern
-                }
+                Rectangle rectangle = new Rectangle { Fill = Brushes.Gray, StrokeThickness = 1, Stroke = Brushes.Black}; //one is gray other is brown and so on...
+                rectangle.SetValue(Grid.RowProperty, (int)GridRows - skyscraperHeight);
+                rectangle.SetValue(Grid.ColumnProperty, x);
+                Grid.SetRowSpan(rectangle,skyscraperHeight);
+                gameGrid.Children.Add(rectangle);
             }
-        }
-
-        private bool OddChecker(bool oddRectangle, int x) //Return true only when last plate was false
-        {
-            oddRectangle = !oddRectangle;
-            if (x == GridColumns - 1 && GridColumns % 2 == 0) //only true when x(rows) are even
-                oddRectangle = !oddRectangle;
-
-            return oddRectangle;
         }
     }
 }
