@@ -24,9 +24,6 @@ namespace WPF_Game_Gorillas
         private static readonly Regex _numOnly = new Regex("^[0-9]*$");
         Gorillas gorillasGame;
 
-        private int[] player1 = new int[2];
-        private int[] player2 = new int[2];
-
         public MainWindow()
         {
             InitializeComponent();
@@ -44,9 +41,7 @@ namespace WPF_Game_Gorillas
         private void ESCapeKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-            {
                 this.Close();
-            }
         }
 
         private void player1Angle_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -54,7 +49,7 @@ namespace WPF_Game_Gorillas
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
 
-            player1[0] = CheckNumber(e, player1Angle.Text);
+            gorillasGame.player1[0] = CheckNumber(e, player1Angle.Text);
         }
 
         private void player1Power_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -62,7 +57,7 @@ namespace WPF_Game_Gorillas
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
 
-            player1[1] = CheckNumber(e, player1Angle.Text);
+            gorillasGame.player1[1] = CheckNumber(e, player1Angle.Text);
         }
 
         private void player2Angle_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -70,7 +65,7 @@ namespace WPF_Game_Gorillas
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
 
-            player2[0] = CheckNumber(e, player1Angle.Text);
+            gorillasGame.player2[0] = CheckNumber(e, player1Angle.Text);
         }
 
         private void player2Power_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -78,7 +73,7 @@ namespace WPF_Game_Gorillas
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
 
-            player2[1] = CheckNumber(e, player1Angle.Text);
+            gorillasGame.player2[1] = CheckNumber(e, player1Angle.Text);
         }
 
         private int CheckNumber(TextCompositionEventArgs e, string text)
@@ -104,7 +99,7 @@ namespace WPF_Game_Gorillas
 
         private void nextRoundButton_Click(object sender, RoutedEventArgs e)
         {
-
+            gorillasGame.ThrowCalculation();
         }
     }
 }
