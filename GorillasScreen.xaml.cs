@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace WPF_Game_Gorillas
 {
@@ -20,6 +21,11 @@ namespace WPF_Game_Gorillas
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly Regex _numOnly = new Regex("^[0-9]*$");
+
+        private int[] player1 = new int[2];
+        private int[] player2 = new int[2];
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +46,59 @@ namespace WPF_Game_Gorillas
             if (e.Key == Key.Escape)
             {
                 this.Close();
+            }
+        }
+
+        private void player1Angle_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!_numOnly.IsMatch(e.Text))
+                e.Handled = true;
+
+            player1[0] = CheckNumber(e, player1Angle.Text);
+        }
+
+        private void player1Power_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!_numOnly.IsMatch(e.Text))
+                e.Handled = true;
+
+            player1[1] = CheckNumber(e, player1Angle.Text);
+        }
+
+        private void player2Angle_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!_numOnly.IsMatch(e.Text))
+                e.Handled = true;
+
+            player2[0] = CheckNumber(e, player1Angle.Text);
+        }
+
+        private void player2Power_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!_numOnly.IsMatch(e.Text))
+                e.Handled = true;
+
+            player2[1] = CheckNumber(e, player1Angle.Text);
+        }
+
+        private int CheckNumber(TextCompositionEventArgs e, string text)
+        {
+            int outNumber = 0;
+            try
+            {
+                outNumber = int.Parse(text);
+                if (outNumber > 270 || outNumber < 0)
+                {
+                    MessageBox.Show("Zadal jste neplatné hodnoty");
+                    return 0;
+                }
+                else
+                    return outNumber;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Zadal jste neplatné hodnoty");
+                return 0;
             }
         }
     }
