@@ -6,7 +6,5 @@
         xmlns:local="clr-namespace:WPF_Game_Gorillas"
         mc:Ignorable="d"
         Title="Gorillas - Game" MinWidth="896" MinHeight="504" MaxWidth="896" MaxHeight="504" SourceInitialized="Window_SourceInitialized"> <!--896 x 504 => 16:9 aspect ratio-->
-    <Grid x:Name="gameGrid" x:FieldModifier="public" Background="DarkBlue">
-        
-    </Grid>
+    <Canvas x:Name="gameCanvas" Background="DarkBlue"/>
 </Window>
