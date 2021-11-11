@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Gorillas" Grid.Row="0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        
+        <Image Source="Resources/gorilla.png"/>
         <Label Content="Počet potřebných výher k ukončení hry (1-5): " Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBox x:Name="textBox_gamesToWin" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Text="1"/>
 

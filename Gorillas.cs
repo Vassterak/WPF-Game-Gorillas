@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace WPF_Game_Gorillas
 {
@@ -22,6 +23,7 @@ namespace WPF_Game_Gorillas
             this.gameGrid = gameGrid;
             PrepareGameField(windowWidth, windowHeight);
             RenderSkyscrapers();
+            GorillaSpawn();
         }
 
         private void PrepareGameField(double windowWidth, double windowHeight) //Create a grid layout for the content
@@ -54,6 +56,16 @@ namespace WPF_Game_Gorillas
                 Grid.SetRowSpan(rectangle,skyscraperHeight + 1);
                 gameGrid.Children.Add(rectangle);
             }
+        }
+
+        private void GorillaSpawn()
+        {
+            Rectangle gorillaSprite = new Rectangle();
+            gorillaSprite.Fill = new ImageBrush(new BitmapImage(new Uri("Resources/gorilla.png", UriKind.Relative))); //Microsoft's horrible image implementation
+
+            gorillaSprite.SetValue(Grid.RowProperty, 0);
+            gorillaSprite.SetValue(Grid.ColumnProperty, 0);
+            gameGrid.Children.Add(gorillaSprite);
         }
     }
 }
