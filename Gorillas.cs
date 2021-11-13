@@ -20,6 +20,7 @@ namespace WPF_Game_Gorillas
         public bool player1Starts = true;
 
         private Canvas gameCanvas = new Canvas();
+        List<Rectangle> skyscrapersList = new List<Rectangle>();
         private Random rnd = new Random();
 
         //Players sprites
@@ -28,7 +29,7 @@ namespace WPF_Game_Gorillas
 
         //Bullet variables
         DispatcherTimer physicTimerUpdate = new DispatcherTimer();
-        private Ellipse gameBullet = new Ellipse { Fill = Brushes.White, Width = 15, Height = 15 };
+        private Rectangle gameBullet = new Rectangle { Fill = Brushes.White, Width = 15, Height = 15 };
         private int currentAngle = 0, currentPower = 0, initPositionX, initPositionY;
         private double currentTimeSinceThrow = 0;
 
@@ -75,6 +76,7 @@ namespace WPF_Game_Gorillas
                 Canvas.SetLeft(rectangle, skycraperWidth * i);
                 Canvas.SetTop(rectangle, gameCanvas.ActualHeight - rectangle.Height);
                 gameCanvas.Children.Add(rectangle);
+                skyscrapersList.Add(rectangle); //for collision detection
 
                 if (gorillasLocation[0] == i || gorillasLocation[1] == i) //when position is met add player.
                     GorillaSpawn(skycraperWidth * i, (int)(gameCanvas.ActualHeight - rectangle.Height), i);
@@ -168,10 +170,71 @@ namespace WPF_Game_Gorillas
             gameCanvas.UpdateLayout();
 
 
-            if (currentTimeSinceThrow > 10) //temporary solution (collision detection not yet implemented) 
+            if (currentTimeSinceThrow > 20) //temporary solution (collision detection not yet implemented) 
             {
                 MessageBox.Show("end");
                 physicTimerUpdate.Stop();
+            }
+            CollisionManagement();
+        }
+
+        private static Transform GetFullTransform(UIElement e)
+        {
+            // The order in which transforms are applied is important!
+            var transforms = new TransformGroup();
+
+            if (e.RenderTransform != null)
+                transforms.Children.Add(e.RenderTransform);
+
+            var xTranslate = (double)e.GetValue(Canvas.LeftProperty);
+            if (double.IsNaN(xTranslate))
+                xTranslate = 0D;
+
+            var yTranslate = (double)e.GetValue(Canvas.TopProperty);
+            if (double.IsNaN(yTranslate))
+                yTranslate = 0D;
+
+            var translateTransform = new TranslateTransform(xTranslate, yTranslate);
+            transforms.Children.Add(translateTransform);
+
+            return transforms;
+        }
+        public Geometry GetGeometry(Shape s)
+        {
+            var g = s.RenderedGeometry.Clone();
+            g.Transform = GetFullTransform(s);
+            return g;
+        }
+
+        private static bool HasIntersection(Geometry g1, Geometry g2) => g1.FillContainsWithDetail(g2) != IntersectionDetail.Empty;
+
+        private void CollisionManagement()
+        {
+            if (!player1Starts)
+            {
+                if(HasIntersection(GetGeometry(gameBullet), GetGeometry(gorillaSprite2)))
+                {
+                    MessageBox.Show("Zásah!");
+                    physicTimerUpdate.Stop();
+                }
+
+            }
+            else
+            {
+                if (HasIntersection(GetGeometry(gameBullet), GetGeometry(gorillaSprite1)))
+                {
+                    MessageBox.Show("Zásah!");
+                    physicTimerUpdate.Stop();
+                }
+            }
+
+            foreach (var skyscraper in skyscrapersList)
+            {
+                if(HasIntersection(GetGeometry(gameBullet), GetGeometry(skyscraper)))
+                {
+                    MessageBox.Show("Vedle!");
+                    physicTimerUpdate.Stop();
+                }
             }
         }
     }
