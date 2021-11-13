@@ -24,6 +24,9 @@
             <Label x:Name="player1Name" x:FieldModifier="public"  Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Content="Player 1 Name" Foreground="White"/>
             <Label x:Name="player2Name" x:FieldModifier="public" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" Grid.ColumnSpan="2" Content="Player 2 Name" Foreground="White"/>
 
+            <Label x:Name="player1Lives" x:FieldModifier="public"  Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" Content="Životy: 0" Foreground="White"/>
+            <Label x:Name="player2Lives" x:FieldModifier="public" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Content="Životy: 0" Foreground="White"/>
+
             <Label Content="Úhel: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Foreground="White" />
             <Label Content=": Úhel" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" Foreground="White" />
 
@@ -37,6 +40,8 @@
             <TextBox x:Name="player2Power" Grid.Row="2" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Power_PreviewTextInput"/>
 
             <Button x:Name="nextRoundButton" Content="Hraj..." Grid.Column="2" Grid.Row="1" Click="nextRoundButton_Click"/>
+
+            <Label x:Name="gameStatusLabel" x:FieldModifier="public" Content="" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Foreground="White" FontSize="18" FontWeight="Bold" />
 
         </Grid>
     </Canvas>

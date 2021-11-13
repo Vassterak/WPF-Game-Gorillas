@@ -20,8 +20,9 @@ namespace WPF_Game_Gorillas
         public bool player1Starts = true;
 
         private Canvas gameCanvas = new Canvas();
-        List<Rectangle> skyscrapersList = new List<Rectangle>();
+        private List<Rectangle> skyscrapersList = new List<Rectangle>();
         private Random rnd = new Random();
+        public Label gameStatusLabel;
 
         //Players sprites
         private Rectangle gorillaSprite1 = new Rectangle();
@@ -29,7 +30,7 @@ namespace WPF_Game_Gorillas
 
         //Bullet variables
         DispatcherTimer physicTimerUpdate = new DispatcherTimer();
-        private Rectangle gameBullet = new Rectangle { Fill = Brushes.White, Width = 15, Height = 15 };
+        private Ellipse gameBullet = new Ellipse { Fill = Brushes.White, Width = 15, Height = 15 };
         private int currentAngle = 0, currentPower = 0, initPositionX, initPositionY;
         private double currentTimeSinceThrow = 0;
 
@@ -157,7 +158,7 @@ namespace WPF_Game_Gorillas
         private void ThrowUpdate()
         {
             double radians = currentAngle * (Math.PI / 180);
-            currentTimeSinceThrow += 0.4; //0.2 = 200ms or 0.2 second
+            currentTimeSinceThrow += 0.25; //0.25 = 250ms or 0.25 second
 
             if (!player1Starts) //when player 1 is playing (inverted case for variable change in ThrowCalculation() )
                 Canvas.SetLeft(gameBullet, initPositionX + (currentPower * currentTimeSinceThrow * Math.Cos(radians)));
@@ -169,18 +170,19 @@ namespace WPF_Game_Gorillas
 
             gameCanvas.UpdateLayout();
 
-
-            if (currentTimeSinceThrow > 20) //temporary solution (collision detection not yet implemented) 
-            {
-                MessageBox.Show("end");
-                physicTimerUpdate.Stop();
-            }
             CollisionManagement();
+
+            if (Canvas.GetLeft(gameBullet) > gameCanvas.ActualWidth || Canvas.GetLeft(gameBullet) < 0) //Check if bullet is inside Canvas
+            {
+                physicTimerUpdate.Stop();
+                gameStatusLabel.Content = "Vedle!";
+                gameCanvas.Children.Remove(gameBullet);
+            }
         }
 
         private static Transform GetFullTransform(UIElement e)
         {
-            // The order in which transforms are applied is important!
+            //https://stackoverflow.com/questions/46758647/wpf-how-to-detect-geometry-intersection-on-canvas
             var transforms = new TransformGroup();
 
             if (e.RenderTransform != null)
@@ -208,13 +210,14 @@ namespace WPF_Game_Gorillas
 
         private static bool HasIntersection(Geometry g1, Geometry g2) => g1.FillContainsWithDetail(g2) != IntersectionDetail.Empty;
 
-        private void CollisionManagement()
+        private void CollisionManagement() //I'm not able to use something like: myRectangle.Intersect(myRectangle2) because of System.Windows.Shapes
         {
             if (!player1Starts)
             {
                 if(HasIntersection(GetGeometry(gameBullet), GetGeometry(gorillaSprite2)))
                 {
-                    MessageBox.Show("Zásah!");
+                    gameCanvas.Children.Remove(gameBullet);
+                    gameStatusLabel.Content = "Zásah!";
                     physicTimerUpdate.Stop();
                 }
 
@@ -223,7 +226,8 @@ namespace WPF_Game_Gorillas
             {
                 if (HasIntersection(GetGeometry(gameBullet), GetGeometry(gorillaSprite1)))
                 {
-                    MessageBox.Show("Zásah!");
+                    gameCanvas.Children.Remove(gameBullet);
+                    gameStatusLabel.Content = "Zásah!";
                     physicTimerUpdate.Stop();
                 }
             }
@@ -232,8 +236,9 @@ namespace WPF_Game_Gorillas
             {
                 if(HasIntersection(GetGeometry(gameBullet), GetGeometry(skyscraper)))
                 {
-                    MessageBox.Show("Vedle!");
                     physicTimerUpdate.Stop();
+                    gameStatusLabel.Content = "Vedle!";
+                    gameCanvas.Children.Remove(gameBullet);
                 }
             }
         }

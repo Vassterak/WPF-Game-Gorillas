@@ -35,8 +35,9 @@ namespace WPF_Game_Gorillas
         {
             gorillasGame = new Gorillas(this.Width, this.Height, gameCanvas, int.Parse(((GameSettings)Application.Current.MainWindow).textBox_playerSize.Text));
 
-            player1Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text;
+            player1Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text; //get values from other window
             player2Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player2.Text;
+            gorillasGame.gameStatusLabel = gameStatusLabel;
 
             nextRoundButton.Content = "Hraje: " + player1Name.Content;
         }
@@ -98,6 +99,8 @@ namespace WPF_Game_Gorillas
         private void nextRoundButton_Click(object sender, RoutedEventArgs e)
         {
             exceptionThrown = false;
+            gameStatusLabel.Content = "";
+
             if (gorillasGame.player1Starts)
             {
                 gorillasGame.player1[0] = CheckNumber(player1Angle.Text);
