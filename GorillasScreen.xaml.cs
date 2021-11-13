@@ -37,7 +37,17 @@ namespace WPF_Game_Gorillas
 
             player1Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text; //get values from other window
             player2Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player2.Text;
+
+            player1Lives.Content = "Počet životů: " + ((GameSettings)Application.Current.MainWindow).textBox_gamesToWin.Text; //live values initialization on screen
+            player2Lives.Content = player1Lives.Content;
+
             gorillasGame.gameStatusLabel = gameStatusLabel;
+
+            gorillasGame.playersLives[0] = player1Lives;
+            gorillasGame.playersLives[1] = player2Lives;
+            gorillasGame.player1[2] = gorillasGame.player2[2] =int.Parse(((GameSettings)Application.Current.MainWindow).textBox_gamesToWin.Text);
+            gorillasGame.playersNames[0] = player1Name.Content.ToString();
+            gorillasGame.playersNames[1] = player2Name.Content.ToString();
 
             nextRoundButton.Content = "Hraje: " + player1Name.Content;
         }

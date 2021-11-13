@@ -15,14 +15,16 @@ namespace WPF_Game_Gorillas
     class Gorillas
     {   
         private const int gravityCoeficient = 10; //9,81 rounded to 10
-        public int[] player1 = new int[2]; //angle and speed
-        public int[] player2 = new int[2]; //angle and speed
+        public string[] playersNames = new string[2];
+        public int[] player1 = new int[3]; //angle and speed, lives
+        public int[] player2 = new int[3]; //angle and speed, lives
         public bool player1Starts = true;
 
         private Canvas gameCanvas = new Canvas();
         private List<Rectangle> skyscrapersList = new List<Rectangle>();
         private Random rnd = new Random();
-        public Label gameStatusLabel;
+        public Label gameStatusLabel; //values is set outside the class
+        public Label[] playersLives = new Label[2];
 
         //Players sprites
         private Rectangle gorillaSprite1 = new Rectangle();
@@ -216,9 +218,22 @@ namespace WPF_Game_Gorillas
             {
                 if(HasIntersection(GetGeometry(gameBullet), GetGeometry(gorillaSprite2)))
                 {
+                    player2[2]--;
                     gameCanvas.Children.Remove(gameBullet);
                     gameStatusLabel.Content = "Zásah!";
+                    playersLives[1].Content = "Počet životů: " + player2[2].ToString();
                     physicTimerUpdate.Stop();
+
+                    if (player2[2] <= 0)
+                    {
+                        MessageBox.Show("Hráč: " + playersNames[0] + " vyhrál!");
+
+                        foreach (Window killThatWindow in App.Current.Windows) //I was unable to find simpler version that was actually working...
+                        {
+                            if (killThatWindow.Title == "Gorillas - Game")
+                                killThatWindow.Close();
+                        }
+                    }
                 }
 
             }
@@ -226,9 +241,21 @@ namespace WPF_Game_Gorillas
             {
                 if (HasIntersection(GetGeometry(gameBullet), GetGeometry(gorillaSprite1)))
                 {
+                    player1[2]--;
                     gameCanvas.Children.Remove(gameBullet);
                     gameStatusLabel.Content = "Zásah!";
+                    playersLives[0].Content = "Počet životů: " + player1[2].ToString();
                     physicTimerUpdate.Stop();
+
+                    if (player1[2] <= 0)
+                    {
+                        MessageBox.Show("Hráč: " + playersNames[1] + " vyhrál!");
+                        foreach (Window killThatWindow in App.Current.Windows) //I was unable to find simpler version that was actually working...
+                        {
+                            if (killThatWindow.Title == "Gorillas - Game")
+                                killThatWindow.Close();
+                        }
+                    }
                 }
             }
 
