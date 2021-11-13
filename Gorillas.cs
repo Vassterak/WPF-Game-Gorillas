@@ -53,7 +53,7 @@ namespace WPF_Game_Gorillas
         public Gorillas(double windowWidth, double windowHeight, Canvas gameCanvas, int playerSize)
         {
             physicTimerUpdate.Tick += new EventHandler(physicTimerUpdate_Tick);
-            physicTimerUpdate.Interval = new TimeSpan(0, 0, 0, 0, 100); //every 100ms
+            physicTimerUpdate.Interval = new TimeSpan(0, 0, 0, 0, 40); //every 40ms => 25 FPS
             GorillaSize = playerSize;
             this.gameCanvas = gameCanvas;
             CanvasColumns = rnd.Next(9, 11 + 1);
@@ -152,20 +152,17 @@ namespace WPF_Game_Gorillas
             ThrowUpdate();
         }
 
-        private void ThrowUpdate() //defining the game FPS
+        private void ThrowUpdate()
         {
             double radians = currentAngle * (Math.PI / 180);
-            currentTimeSinceThrow += 0.2; //0.2 = 200ms or 0.2 second
+            currentTimeSinceThrow += 0.4; //0.2 = 200ms or 0.2 second
 
             if (!player1Starts) //when player 1 is playing (inverted case for variable change in ThrowCalculation() )
-            {
                 Canvas.SetLeft(gameBullet, initPositionX + (currentPower * currentTimeSinceThrow * Math.Cos(radians)));
-            }
 
             else
-            {
                 Canvas.SetLeft(gameBullet, initPositionX - (currentPower * currentTimeSinceThrow * Math.Cos(radians)));
-            }
+
             Canvas.SetTop(gameBullet, initPositionY - (currentPower * currentTimeSinceThrow * Math.Sin(radians) - 0.5 * gravityCoeficient * currentTimeSinceThrow * currentTimeSinceThrow));
 
             gameCanvas.UpdateLayout();
