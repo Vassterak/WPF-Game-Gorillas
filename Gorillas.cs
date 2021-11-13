@@ -17,7 +17,7 @@ namespace WPF_Game_Gorillas
         private const int gravityCoeficient = 10; //9,81 rounded to 10
         public int[] player1 = new int[2]; //angle and speed
         public int[] player2 = new int[2]; //angle and speed
-        private bool player1Starts = true;
+        public bool player1Starts = true;
 
         private Canvas gameCanvas = new Canvas();
         private Random rnd = new Random();
@@ -29,7 +29,8 @@ namespace WPF_Game_Gorillas
         //Bullet variables
         DispatcherTimer physicTimerUpdate = new DispatcherTimer();
         private Ellipse gameBullet = new Ellipse { Fill = Brushes.White, Width = 15, Height = 15 };
-        private int osaX = 0, differenceOfY = 0, angle = 0, power = 0;
+        private int currentAngle = 0, currentPower = 0, initPositionX, initPositionY;
+        private double currentTimeSinceThrow = 0;
 
         private int CanvasColumns { get; set; }
 
@@ -51,6 +52,8 @@ namespace WPF_Game_Gorillas
 
         public Gorillas(double windowWidth, double windowHeight, Canvas gameCanvas, int playerSize)
         {
+            physicTimerUpdate.Tick += new EventHandler(physicTimerUpdate_Tick);
+            physicTimerUpdate.Interval = new TimeSpan(0, 0, 0, 0, 100); //every 100ms
             GorillaSize = playerSize;
             this.gameCanvas = gameCanvas;
             CanvasColumns = rnd.Next(9, 11 + 1);
@@ -112,59 +115,67 @@ namespace WPF_Game_Gorillas
 
         }
 
-        //private void PlayersNames(string name, int row, int column)
-        //{
-        //    Label playersName = new Label { Foreground = Brushes.White };
-        //    playersName.Content = name;
-        //    playersName.SetValue(Grid.RowProperty, row);
-        //    playersName.SetValue(Grid.ColumnProperty, column);
-        //    Grid.SetColumnSpan(playersName, 2);
-
-        //    gameCanvas.Children.Add(playersName);
-        //}
-
-        public void ThrowCalculation()
+        public void ThrowCalculation() 
         {
             gameCanvas.Children.Remove(gameBullet);
 
             if (player1Starts) //player 1 is shooting
             {
-                Canvas.SetLeft(gameBullet, Canvas.GetLeft(gorillaSprite1) + gorillaSprite1.Height / 2);
-                Canvas.SetTop(gameBullet, Canvas.GetTop(gorillaSprite1) - gorillaSprite1.Width / 5);
+                initPositionX = (int)(Canvas.GetLeft(gorillaSprite1) + gorillaSprite1.Height / 2);
+                initPositionY = (int)(Canvas.GetTop(gorillaSprite1) - gorillaSprite1.Width / 5);
+
                 gameCanvas.Children.Add(gameBullet);
                 player1Starts = false;
-                angle = player1[0];
-                power = player1[1];
+                currentAngle = player1[0];
+                currentPower = player1[1];
             }
             else //player 2 is shooting
             {
-                Canvas.SetLeft(gameBullet, Canvas.GetLeft(gorillaSprite2) + gorillaSprite2.Height / 2);
-                Canvas.SetTop(gameBullet, Canvas.GetTop(gorillaSprite2) - gorillaSprite2.Width / 5);
+                initPositionX = (int)(Canvas.GetLeft(gorillaSprite2) + gorillaSprite1.Height / 2);
+                initPositionY = (int)(Canvas.GetTop(gorillaSprite2) - gorillaSprite1.Width / 5);
+
                 gameCanvas.Children.Add(gameBullet);
                 player1Starts = true;
-                angle = player2[0];
-                power = player2[1];
+                currentAngle = player2[0];
+                currentPower = player2[1];
             }
+
+            Canvas.SetLeft(gameBullet, initPositionX);
+            Canvas.SetTop(gameBullet, initPositionY);
+
+            currentTimeSinceThrow = 0;
+            physicTimerUpdate.Start();
         }
 
-        private void ThrowUpdate()
+        private void physicTimerUpdate_Tick(object sender, EventArgs e)
         {
-            double radians = (angle % 360) / 180 * Math.PI;
+            ThrowUpdate();
+        }
 
-            double i = (double)osaX / (power * Math.Cos(radians));
+        private void ThrowUpdate() //defining the game FPS
+        {
+            double radians = currentAngle * (Math.PI / 180);
+            currentTimeSinceThrow += 0.2; //0.2 = 200ms or 0.2 second
 
-            int axisY = (int)(power * i * Math.Sin(radians));
-            axisY = (int)(axisY - 0.5 * gravityCoeficient * i * i);
+            if (!player1Starts) //when player 1 is playing (inverted case for variable change in ThrowCalculation() )
+            {
+                Canvas.SetLeft(gameBullet, initPositionX + (currentPower * currentTimeSinceThrow * Math.Cos(radians)));
+            }
 
-            differenceOfY = differenceOfY - axisY;
+            else
+            {
+                Canvas.SetLeft(gameBullet, initPositionX - (currentPower * currentTimeSinceThrow * Math.Cos(radians)));
+            }
+            Canvas.SetTop(gameBullet, initPositionY - (currentPower * currentTimeSinceThrow * Math.Sin(radians) - 0.5 * gravityCoeficient * currentTimeSinceThrow * currentTimeSinceThrow));
 
-            //gameBullet.Location = new Point(gameBullet.Location.X + 15, gameBullet.Location.Y + rozdilOsyY);
-            Canvas.SetLeft(gameBullet, Canvas.GetLeft(gameBullet) + 10);
-            Canvas.SetTop(gameBullet, Canvas.GetTop(gameBullet) + differenceOfY);
+            gameCanvas.UpdateLayout();
 
-            osaX += 15;
-            differenceOfY = axisY;
-            //detekceKolize();
+
+            if (currentTimeSinceThrow > 10) //temporary solution (collision detection not yet implemented) 
+            {
+                MessageBox.Show("end");
+                physicTimerUpdate.Stop();
+            }
         }
     }
 }

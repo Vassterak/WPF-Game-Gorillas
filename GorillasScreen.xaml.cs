@@ -22,6 +22,7 @@ namespace WPF_Game_Gorillas
     public partial class MainWindow : Window
     {
         private static readonly Regex _numOnly = new Regex("^[0-9]*$");
+        private bool exceptionThrown = false;
         Gorillas gorillasGame;
 
         public MainWindow()
@@ -36,6 +37,8 @@ namespace WPF_Game_Gorillas
 
             player1Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player1.Text;
             player2Name.Content = ((GameSettings)Application.Current.MainWindow).textBox_player2.Text;
+
+            nextRoundButton.Content = "Hraje: " + player1Name.Content;
         }
 
         private void ESCapeKey(object sender, KeyEventArgs e)
@@ -48,35 +51,27 @@ namespace WPF_Game_Gorillas
         {
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
-
-            gorillasGame.player1[0] = CheckNumber(e, player1Angle.Text);
         }
 
         private void player1Power_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
-
-            gorillasGame.player1[1] = CheckNumber(e, player1Angle.Text);
         }
 
         private void player2Angle_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
-
-            gorillasGame.player2[0] = CheckNumber(e, player1Angle.Text);
         }
 
         private void player2Power_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;
-
-            gorillasGame.player2[1] = CheckNumber(e, player1Angle.Text);
         }
 
-        private int CheckNumber(TextCompositionEventArgs e, string text)
+        private int CheckNumber(string text)
         {
             int outNumber = 0;
             try
@@ -84,22 +79,51 @@ namespace WPF_Game_Gorillas
                 outNumber = int.Parse(text);
                 if (outNumber > 270 || outNumber < 0)
                 {
-                    MessageBox.Show("Zadal jste neplatné hodnoty");
+                    MessageBox.Show("Zadal jste neplatné hodnoty. Úhel nejsmí být větší jak 270° a síla také.");
+                    exceptionThrown = true;
                     return 0;
                 }
                 else
                     return outNumber;
             }
+
             catch (Exception)
             {
-                MessageBox.Show("Zadal jste neplatné hodnoty");
+                MessageBox.Show("Zadal jste neplatné hodnoty. Úhel nejsmí být větší jak 270° a síla také.");
+                exceptionThrown = true;
                 return 0;
             }
         }
 
         private void nextRoundButton_Click(object sender, RoutedEventArgs e)
         {
-            gorillasGame.ThrowCalculation();
+            exceptionThrown = false;
+            if (gorillasGame.player1Starts)
+            {
+                gorillasGame.player1[0] = CheckNumber(player1Angle.Text);
+                if (!exceptionThrown)
+                {
+                    gorillasGame.player1[1] = CheckNumber(player1Power.Text);
+
+                    if (!exceptionThrown)
+                        nextRoundButton.Content = player2Name.Content;
+                }
+            }
+            else
+            {
+                gorillasGame.player2[0] = CheckNumber(player2Angle.Text);
+
+                if (!exceptionThrown)
+                {
+                    gorillasGame.player2[1] = CheckNumber(player2Power.Text);
+
+                    if (!exceptionThrown)
+                        nextRoundButton.Content = player1Name.Content;
+                }
+            }
+
+            if (!exceptionThrown)
+                gorillasGame.ThrowCalculation();
         }
     }
 }

@@ -36,7 +36,7 @@
             <TextBox x:Name="player2Angle" Grid.Row="1" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Angle_PreviewTextInput"/>
             <TextBox x:Name="player2Power" Grid.Row="2" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Power_PreviewTextInput"/>
 
-            <Button x:Name="nextRoundButton" Content="Hraj!" Grid.Column="2" Grid.Row="1" Click="nextRoundButton_Click"/>
+            <Button x:Name="nextRoundButton" Content="Hraj..." Grid.Column="2" Grid.Row="1" Click="nextRoundButton_Click"/>
 
         </Grid>
     </Canvas>
