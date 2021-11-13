@@ -6,6 +6,11 @@
     <RootNamespace>WPF_Game_Gorillas</RootNamespace>
     <UseWPF>true</UseWPF>
     <StartupObject>WPF_Game_Gorillas.App</StartupObject>
+    <ApplicationIcon>Resources\gorillaIco.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
