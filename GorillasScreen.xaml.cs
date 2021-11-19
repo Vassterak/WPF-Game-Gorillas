@@ -135,6 +135,14 @@ namespace WPF_Game_Gorillas
                 }
             }
 
+            //Reset input values to make it harder (you need to remeber your previous values)
+
+            player1Angle.Text = "";
+            player1Power.Text = "";
+
+            player2Angle.Text = "";
+            player2Power.Text = "";
+
             if (!exceptionThrown)
                 gorillasGame.ThrowCalculation();
         }

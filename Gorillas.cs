@@ -100,7 +100,7 @@ namespace WPF_Game_Gorillas
         {
             if (index < 3) //of course I'm writing the most efficient code... As I always did...
             {
-                gorillaSprite1.Fill = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Resources/gorilla.png", UriKind.Absolute))); //Microsoft's horrible image implementation
+                gorillaSprite1.Fill = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Resources/gorilla.png", UriKind.Absolute)));
                 gorillaSprite1.Width = GorillaSize;
                 gorillaSprite1.Height = GorillaSize;
                 Canvas.SetLeft(gorillaSprite1, leftPosition);
@@ -110,7 +110,7 @@ namespace WPF_Game_Gorillas
 
             else
             {
-                gorillaSprite2.Fill = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Resources/gorilla.png", UriKind.Absolute))); //Microsoft's horrible image implementation
+                gorillaSprite2.Fill = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Resources/gorilla.png", UriKind.Absolute)));
                 gorillaSprite2.Width = GorillaSize;
                 gorillaSprite2.Height = GorillaSize;
                 Canvas.SetLeft(gorillaSprite2, leftPosition);
