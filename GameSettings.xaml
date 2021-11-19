@@ -22,17 +22,18 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Gorillas" Grid.Row="0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        <Image Source="Resources/gorilla.png"/>
-        <Label Content="Počet potřebných výher k ukončení hry (1-5): " Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBox x:Name="textBox_gamesToWin" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Text="1"/>
+        <Label Content="Gorillas - game" Grid.Row="0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <Image Source="Resources/gorilla.png" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="1"/>
 
-        <Label Content="Hráč číslo 1 jméno: " Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Label Content="Hráč číslo 2 jméno: " Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Label Content="Velikost hráčů na hrací ploše: " Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBox x:Name="textBox_player1" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player1_PreviewTextInput" Text="Hráč 1"/>
-        <TextBox x:Name="textBox_player2" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player2_PreviewTextInput" Text="Hráč 2" />
-        <TextBox x:Name="textBox_playerSize" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_playerSize_PreviewTextInput"  Text="80"/>
+        <Label Content="Počet potřebných výher k ukončení hry (1-5): " Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox x:Name="textBox_gamesToWin" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Text="1" PreviewTextInput="textBox_gamesToWin_PreviewTextInput"/>
+
+        <Label Content="Hráč číslo 1 jméno: " Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Content="Hráč číslo 2 jméno: " Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Content="Velikost hráčů na hrací ploše (v px): " Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox x:Name="textBox_player1" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player1_PreviewTextInput" Text="Hráč 1"/>
+        <TextBox x:Name="textBox_player2" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_player2_PreviewTextInput" Text="Hráč 2" />
+        <TextBox x:Name="textBox_playerSize" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" PreviewTextInput="textBox_playerSize_PreviewTextInput"  Text="80"/>
 
         <Button x:Name="button_newGame" Content="Start !" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30" Click="button_newGame_Click"/>
     </Grid>

@@ -48,18 +48,33 @@ namespace WPF_Game_Gorillas
         {
             if (textBox.Text.Length > 8)
             {
-                MessageBox.Show("Jméno je moc dlouhé!"); 
+                MessageBox.Show("Jméno je moc dlouhé!");
                 e.Handled = true;
             }
         }
 
         private void button_newGame_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainGame = new MainWindow();
-            mainGame.ShowDialog(); //Prevents to creating new window until the old is closed
+            if (int.Parse(textBox_gamesToWin.Text) > 5 || int.Parse(textBox_gamesToWin.Text) < 1)
+            {
+                MessageBox.Show("Zadaj jste neplatný počet životů.");
+                textBox_gamesToWin.Text = "1";
+            }
+
+            else
+            {
+                MainWindow mainGame = new MainWindow();
+                mainGame.ShowDialog(); //Prevents to creating new window until the old is closed
+            }
         }
 
         private void textBox_playerSize_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!_numOnly.IsMatch(e.Text))
+                e.Handled = true;
+        }
+
+        private void textBox_gamesToWin_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!_numOnly.IsMatch(e.Text))
                 e.Handled = true;

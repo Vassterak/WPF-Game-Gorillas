@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Game_Gorillas"
         mc:Ignorable="d"
-        Title="Gorillas - Game" MinWidth="896" MinHeight="504" MaxWidth="896" MaxHeight="504" SourceInitialized="Window_SourceInitialized"> <!--896 x 504 => 16:9 aspect ratio-->
+        Title="Gorillas - Game" MinWidth="896" MinHeight="504" MaxWidth="896" MaxHeight="504" SourceInitialized="Window_SourceInitialized">
+    <!--896 x 504 => 16:9 aspect ratio-->
     <Canvas x:Name="gameCanvas" Background="DarkBlue">
         <Grid x:Name="UserInputsGrid" Width="{Binding ElementName=gameCanvas, Path=ActualWidth}" Height="90" >
             <Grid.RowDefinitions>
@@ -24,6 +25,9 @@
             <Label x:Name="player1Name" x:FieldModifier="public"  Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Content="Player 1 Name" Foreground="White"/>
             <Label x:Name="player2Name" x:FieldModifier="public" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Right" Grid.ColumnSpan="2" Content="Player 2 Name" Foreground="White"/>
 
+            <Label x:Name="player1Lives" x:FieldModifier="public"  Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" Content="Životy: 0" Foreground="White"/>
+            <Label x:Name="player2Lives" x:FieldModifier="public" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Content="Životy: 0" Foreground="White"/>
+
             <Label Content="Úhel: " Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Foreground="White" />
             <Label Content=": Úhel" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" Foreground="White" />
 
@@ -36,7 +40,9 @@
             <TextBox x:Name="player2Angle" Grid.Row="1" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Angle_PreviewTextInput"/>
             <TextBox x:Name="player2Power" Grid.Row="2" Grid.Column="3" Width="60" HorizontalAlignment="Right" Height="25" PreviewTextInput="player2Power_PreviewTextInput"/>
 
-            <Button x:Name="nextRoundButton" Content="Hraj!" Grid.Column="2" Grid.Row="1" Click="nextRoundButton_Click"/>
+            <Button x:Name="nextRoundButton" Content="Hraj..." Grid.Column="2" Grid.Row="1" Click="nextRoundButton_Click"/>
+
+            <Label x:Name="gameStatusLabel" x:FieldModifier="public" Content="" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Foreground="White" FontSize="18" FontWeight="Bold" />
 
         </Grid>
     </Canvas>
